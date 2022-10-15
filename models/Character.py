@@ -1,4 +1,4 @@
-class CharacterDTO:
+class Character:
     def __init__(self, name, house, species, gender,
                  wizard, ancestry, date_of_birth, year_of_birth, image):
         self.__name = name
