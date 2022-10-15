@@ -1,7 +1,6 @@
 import requests as requests
 
 from constants import Constants
-from controllers.SpellController import get_all_spells
 from mocks import SpellsResponseMock
 from models.CharacterDTO import CharacterDTO
 
@@ -77,7 +76,7 @@ def get_characters_by_house(characters, houses_name):
     return characters_by_house
 
 
-def get_spells_by_character(characters):
+def get_spells_of_characters(characters):
     for c in characters:
         return c.spells
 
@@ -88,18 +87,16 @@ def get_spells_by_character_name(characters, name):
             return c.spells
 
 
-def learn_spell_by_character_name(characters, name, spell_name='Aberto'):
-    # spells = get_all_spells()
-    spells_mock = SpellsResponseMock.from_dto(SpellsResponseMock.get())
-
+def get_character_by_name(characters, name):
     for c in characters:
-        if c.name == name:
-            for s in spells_mock:
-                if s.name == spell_name:
-                    print(f'{c.name} learned {s.name} spell!')
+        return c if c.name == name else None
 
-    # for c in characters:
-    #     if c.name == name:
-    #         for s in spells:
-    #             if s.name == spell_name:
-    #                 print(f'{c.name} learned {s.name} spell!')
+
+def learn_spell_by_character_name(characters, name, spell_name):
+    # spells = get_all_spells()
+    spells = SpellsResponseMock.from_dto(SpellsResponseMock.get())  # mock list
+
+    # if c.name == name:
+    #     for s in spells:
+    #         if s.name == spell_name:
+    #             print(f'{c.name} learned {s.name} spell!')

@@ -1,5 +1,5 @@
 from controllers.CharacterController import *
-from mocks import CharacterByHouseResponseMock
+from exceptions.CharacterNotFoundException import CharacterNotFoundException
 
 if __name__ == '__main__':
     all_characters = get_all_characters()
@@ -14,7 +14,11 @@ if __name__ == '__main__':
     #     print(character.name)
 
     # get_spells_by_character_name(all_characters, 'Luna Lovegood')
-    learn_spell_by_character_name(all_characters, 'Luna Lovegood')
+    # learn_spell_by_character_name(all_characters, 'Luna Lovegood', 'Aberto')
     # get_spells_by_character_name(all_characters, 'Luna Lovegood')
+    # print(CharacterByHouseResponseMock.get())
 
-    print(CharacterByHouseResponseMock.get())
+    if get_character_by_name(all_characters, 'Jack') is None:
+        raise CharacterNotFoundException('Char not found!')
+
+    print(get_character_by_name(all_characters, 'Luna Lovegood'))
