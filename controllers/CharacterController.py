@@ -8,6 +8,10 @@ from models.Character import Character
 class CharacterController:
     def __init__(self, data_source=None):
         self.__data_source = data_source
+        self.__ravenclaw_characters = None
+        self.__slytherin_characters = None
+        self.__gryffindor_characters = None
+        self.__hufflepuffe_characters = None
 
     def get_all_characters(self):
         if self.__data_source:
@@ -69,16 +73,34 @@ class CharacterController:
                 characters_of_gryffindor_house.add(c)
         return characters_of_gryffindor_house
 
-    def get_characters_by_house(self, houses_name):
-        characters_by_house = set()
-        for c in self.get_all_characters():
-            if c.house == houses_name:
-                characters_by_house.add(c)
-        return characters_by_house
+    def get_characters_by_house(self, mock=None, houses_name='gryffindor'):
 
-    def get_spells_by_character_name(self, name) -> list[Spell]:
-        characters = self.get_character_by_name(name)
-        return characters.spells
+        if type(mock) is str:
+            raise NotImplementedError
+
+        if mock is not None:
+            request_to_json = mock
+            print(type(request_to_json))
+        else:
+            print('Calling API...')
+            request = requests.get(
+                f'{Constants.base_url}/api/characters/house/{houses_name.lower()}')
+            request_to_json = request.json()
+
+        if houses_name.lower() == 'ravenclaw':
+            self.__ravenclaw_characters = request_to_json
+            return self.__ravenclaw_characters
+        elif houses_name.lower() == 'gryffindor':
+            self.__gryffindor_characters = request_to_json
+            return self.__gryffindor_characters
+        elif houses_name.lower() == 'slytherin':
+            self.__slytherin_characters = request_to_json
+            return self.__slytherin_characters
+        elif houses_name.lower() == 'hufflepuffe':
+            self.__hufflepuffe_characters = request_to_json
+            return self.__hufflepuffe_characters
+        else:
+            raise NotImplementedError
 
     def get_character_by_name(self, name):
         for c in self.get_all_characters():
@@ -87,5 +109,16 @@ class CharacterController:
             else:
                 return None
 
-    def learn_spell_by_character_name(self, characters, name, spell_name):
-        raise NotImplementedError
+    def get_spells_by_character_name(self, name) -> list[Spell]:
+        characters = self.get_character_by_name(name)
+        return characters.spells
+
+    def learn_spell_by_character_name(self, spells_list, character_name, spell_name):
+        character = self.get_character_by_name(character_name)
+
+        if character is not None:
+            for spell in spells_list:
+                if spell.name == spell_name:
+                    character.spells.append(spell)
+                else:
+                    print('error')

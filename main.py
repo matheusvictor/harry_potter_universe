@@ -1,24 +1,30 @@
 from controllers.CharacterController import *
-from exceptions.CharacterNotFoundException import CharacterNotFoundException
+from controllers.SpellController import *
+from mocks.CharactersByHouseResponseMock import CharactersByHouseResponseMock
+from mocks.CharactersResponseMock import CharactersResponseMock
+from mocks.SpellsResponseMock import SpellsResponseMock
 
 if __name__ == '__main__':
-    all_characters = get_all_characters()
+    characters_mock = CharactersResponseMock()
+    characters_controller = CharacterController(characters_mock)
 
-    # houses_name = get_character_houses_name(all_characters)
-    # for name in houses_name:
-    #     print(name)
+    spells_mock = SpellsResponseMock()
+    spells_controller = SpellController(spells_mock)
+
+    r = CharactersByHouseResponseMock.get('Ravenclaw')
+    print(characters_controller.get_characters_by_house('a'))
+
+    # print(spells_controller.get_spell_by_name('Alakazan'))
+    # print(spells_controller.get_spell_by_name('Aberto'))
     #
-    # print('*' * 60)
-    # ravenclaw = get_characters_of_ravenclaw_house(all_characters)
-    # for character in ravenclaw:
-    #     print(character.name)
+    # print(characters_controller.learn_spell_by_character_name(spells_controller.get_all_spells(), 'Harry Potter', 'B'))
 
-    # get_spells_by_character_name(all_characters, 'Luna Lovegood')
-    # learn_spell_by_character_name(all_characters, 'Luna Lovegood', 'Aberto')
-    # get_spells_by_character_name(all_characters, 'Luna Lovegood')
-    # print(CharacterByHouseResponseMock.get())
+    # spells_mock = SpellsResponseMock()
+    # print(characters_controller.get_spells_by_character_name('Harry Potter'))
+    # characters_controller.learn_spell_by_character_name('H', 'Aberto')
+    # characters_controller.learn_spell_by_character_name('Harry Potter', 'A')
 
-    if get_character_by_name(all_characters, 'Jack') is None:
-        raise CharacterNotFoundException('Char not found!')
-
-    print(get_character_by_name(all_characters, 'Luna Lovegood'))
+    # if get_character_by_name(all_characters, 'Jack') is None:
+    #     raise CharacterNotFoundException('Char not found!')
+    #
+    # print(get_character_by_name(all_characters, 'Luna Lovegood'))
