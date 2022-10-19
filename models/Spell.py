@@ -10,3 +10,6 @@ class Spell:
     @property
     def description(self):
         return self.__description
+
+    def __str__(self):
+        return self.__name

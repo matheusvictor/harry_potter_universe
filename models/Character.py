@@ -10,7 +10,7 @@ class Character:
         self.__date_of_birth = date_of_birth
         self.__year_of_birth = year_of_birth
         self.__image = image
-        self.__spells = []
+        self.__spells = set()
 
     @property
     def name(self):

@@ -11,11 +11,20 @@ if __name__ == '__main__':
     spells_mock = SpellsResponseMock()
     spells_controller = SpellController(spells_mock)
 
-    ravenclaws_characters_mock = CharactersByHouseResponseMock.get('Ravenclaw')
-    print(characters_controller.get_characters_by_house(ravenclaws_characters_mock))
+    spells = spells_controller.get_all_spells()
 
-    gryffindor_characters_mock = CharactersByHouseResponseMock.get('Gryffindor')
-    print(characters_controller.get_characters_by_house(houses_name='Gryffindor'))
+    a = characters_controller.learn_spell_by_character_name(spells, 'Harry Potter', 'Aberto')
+    b = characters_controller.learn_spell_by_character_name(spells, 'Harry Potter', 'Alohomora')
+    print(a)
+
+    c = characters_controller.learn_spell_by_character_name(spells, 'Harry Potter', 'Alakazan')
+    print(b)
+
+    # ravenclaws_characters_mock = CharactersByHouseResponseMock.get('Ravenclaw')
+    # print(characters_controller.get_characters_by_house(ravenclaws_characters_mock))
+    #
+    # gryffindor_characters_mock = CharactersByHouseResponseMock.get('Gryffindor')
+    # print(characters_controller.get_characters_by_house(houses_name='Gryffindor'))
 
     # print(spells_controller.get_spell_by_name('Alakazan'))
     # print(spells_controller.get_spell_by_name('Aberto'))

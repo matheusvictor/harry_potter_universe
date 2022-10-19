@@ -119,6 +119,9 @@ class CharacterController:
         if character is not None:
             for spell in spells_list:
                 if spell.name == spell_name:
-                    character.spells.append(spell)
+                    character.spells.add(spell)
                 else:
-                    print('error')
+                    print(f'{spell_name} not founded')
+
+            for s in character.spells:
+                print(s)
